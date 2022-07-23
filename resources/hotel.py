@@ -69,6 +69,8 @@ class Hotel(Resource):
     return hotel.json(), 201 # 201 created
 
   def delete(self, hotel_id):
-    global hoteis # evitar erro UnboundLocalError: local variable 'hoteis' referenced before assignment
-    hoteis = [hotel for hotel in hoteis if hotel['hotel_id'] != hotel_id]
-    return {'message': 'Hotel Deleted'}
+    hotel = HotelModel.find_hotel(hotel_id)
+    if hotel:
+      hotel.delete_hotel()
+      return {'message': 'Hotel Deleted'}
+    return {'message': 'Hotel not found'}, 404

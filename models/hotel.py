@@ -42,4 +42,7 @@ class HotelModel(banco.Model): # construtor
     self.estrelas = estrelas
     self.diaria = diaria
     self.cidade = cidade
-    
+  
+  def delete_hotel(self):
+    banco.session.delete(self)
+    banco.session.commit()
