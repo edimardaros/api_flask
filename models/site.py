@@ -31,5 +31,16 @@ class SiteModel(banco.Model): # construtor
     banco.session.commit()
   
   def delete_site(self):
+    # Deletando todos hoteis associados ao site
+    [hotel.delete_hotel() for hotel in self.hoteis] 
+
     banco.session.delete(self)
     banco.session.commit()
+  
+  @classmethod
+  def find_by_id(cls, site_id):   
+    site = cls.query.filter_by(site_id=site_id).first()
+    if site:
+      return site
+    return None
+
