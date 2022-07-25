@@ -43,7 +43,8 @@ class Hoteis(Resource):
         'nome' : linha[1],
         'estrelas' : linha[2],
         'diaria' : linha[3],
-        'cidade' : linha[4]
+        'cidade' : linha[4],
+        'site_id': linha[5]
       })
     return {'hoteis': hoteis}
     # return {'hoteis': [hotel.json() for hotel in HotelModel.query.all()]}
@@ -55,6 +56,7 @@ class Hotel(Resource):
   argumentos.add_argument('estrelas', type=float, required=True, help="The field 'estrelas' is required.")
   argumentos.add_argument('diaria')
   argumentos.add_argument('cidade')
+  argumentos.add_argument('site_id', type=int, required=True, help="The field 'site_id' is required.")
 
   def get(self, hotel_id):
     hotel = HotelModel.find_hotel(hotel_id)

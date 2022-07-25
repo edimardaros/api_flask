@@ -34,7 +34,7 @@ api.add_resource(UserRegister, '/cadastro')
 api.add_resource(UserLogin, '/login')
 api.add_resource(UserLogout, '/logout')
 api.add_resource(Sites, '/sites')
-api.add_resource(Site, '/site/<string:url>')
+api.add_resource(Site, '/sites/<string:url>')
 
 if __name__ == '__main__':
   from sql_alchemy import banco
