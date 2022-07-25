@@ -1,3 +1,4 @@
+from multiprocessing import connection
 from pkg_resources import require
 from flask_restful import Resource, reqparse
 from models.hotel import HotelModel
@@ -44,11 +45,21 @@ path_params.add_argument('offset', type=float)
 
 class Hoteis(Resource):
   def get(self):
+    connection = sqlite3.connect('banco.db')
+    cursor = connection.cursos()
 
     dados = path_params.parse_args()
     # dados = {'limit': 50, 'diaria_min': None}
     # dados['limit']
     dados_validos = {chave:dados[chave] for chave in dados if dados[chave] is not None}
+    parametros = normalize_path_params(**dados_validos)
+
+    if parametros.get('cidade'):
+      consulta = "SELECT * FROM hoteis \
+      WHERE (estrelas >= ? and estrelas <= ?)\
+        AND (diaria >= ? and diaria <= ?)\
+          LIMIT ? OFFSET ?"
+
     return {'hoteis': [hotel.json() for hotel in HotelModel.query.all()]}
 
 class Hotel(Resource):
